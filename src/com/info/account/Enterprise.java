@@ -1,6 +1,10 @@
 package com.info.account;
 
 public class Enterprise extends Account{
+    public Enterprise(User user) {
+        super(user);
+    }
+
     /**
      * kullanıcının sigorta poliçesi ekleyebilmesi için soyut (abstract) bir
      * fonksiyon tanımlanacaktır. Bu soyut fonksiyon "Individual" ve "Enterprise"
