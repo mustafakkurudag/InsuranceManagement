@@ -1,4 +1,4 @@
-package com.info;
+package com.info.insurance;
 
 import java.util.Date;
 

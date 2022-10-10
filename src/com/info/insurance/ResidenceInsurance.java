@@ -1,6 +1,6 @@
-package com.info;
+package com.info.insurance;
 
-public class HealthInsurance extends Insurance{
+public class ResidenceInsurance extends Insurance{
     @Override
     double calculate(Insurance insurance) {
         return 0;

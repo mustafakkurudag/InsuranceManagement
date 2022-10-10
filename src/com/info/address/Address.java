@@ -1,4 +1,4 @@
-package com.info;
+package com.info.address;
 
 public interface Address {
 }

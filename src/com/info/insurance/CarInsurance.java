@@ -1,4 +1,4 @@
-package com.info;
+package com.info.insurance;
 
 public class CarInsurance extends Insurance {
     @Override
