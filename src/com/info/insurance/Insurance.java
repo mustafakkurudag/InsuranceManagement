@@ -9,4 +9,20 @@ public abstract class Insurance {
     private Date endDate;
 
     abstract double calculate(Insurance insurance);
+
+    public String getInsuranceName() {
+        return insuranceName;
+    }
+
+    public void setInsuranceName(String insuranceName) {
+        this.insuranceName = insuranceName;
+    }
+
+    public double getInsurancePrice() {
+        return insurancePrice;
+    }
+
+    public void setInsurancePrice(double insurancePrice) {
+        this.insurancePrice = insurancePrice;
+    }
 }

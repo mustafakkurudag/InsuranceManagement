@@ -1,6 +1,7 @@
 package com.info.account;
 
 import com.info.InvalidAuthenticationException;
+import com.info.address.AddressManager;
 import com.info.address.BusinessAddress;
 import com.info.address.HomeAddress;
 import com.info.insurance.Insurance;
@@ -15,13 +16,15 @@ public abstract class Account {
     }
     private User user;
     private ArrayList<Insurance> insurances;
+    private AuthenticationStatus authenticationStatus;
+    private AddressManager addressManager = new AddressManager();
     private Scanner scan = new Scanner(System.in);
 
     public Account(User user) {
         this.user = user;
     }
 
-    public AuthenticationStatus login(String email, String password) throws InvalidAuthenticationException {
+    public void login(String email, String password) throws InvalidAuthenticationException {
         /**
          * kullanıcının hesabına login olabilmesi için bir fonksiyon tanımlanacaktır.
          * Bu fonksiyon email ve şifre bilgisi alacak ve gelen email şifre bilgisini
@@ -34,11 +37,11 @@ public abstract class Account {
          */
 
         if (email.equals(user.getEmail()) && password.equals(user.getPassword())) {
-            return AuthenticationStatus.SUCCESS;
+            authenticationStatus = AuthenticationStatus.SUCCESS;
         } else if (!(email.equals(user.getEmail())) || !(password.equals(user.getPassword()))) {
             throw new InvalidAuthenticationException("Giriş Hatası!");
         } else {
-            return AuthenticationStatus.FAIL;
+            authenticationStatus = AuthenticationStatus.FAIL;
         }
     }
 
@@ -49,16 +52,21 @@ public abstract class Account {
         System.out.println("Yaş: " + user.getAge());
         System.out.println("Email: " + user.getEmail());
         System.out.println("Meslek: " + user.getProfession());
+        System.out.println("Ev Adresi: " + user.getAddresses().get(0));
+        System.out.println("İş Adresi: " + user.getAddresses().get(1));
 
     }
 
+    //bu ve alttaki removeAddress metotlarından kullanıcı adres ekleyip çıkarabilecek.
     public void addAddress() {
         System.out.print("Ev adresi:(Boş bırakmak için enter'a basın) ");
-        HomeAddress hAdrress = new HomeAddress(scan.nextLine());
+        HomeAddress hAddress = new HomeAddress(scan.nextLine());
         System.out.print("İş adresi: (Boş bırakmak için enter'a basın)");
         BusinessAddress bAddress = new BusinessAddress(scan.nextLine());
-        user.getAddresses().add(hAdrress);
-        user.getAddresses().add(bAddress);
+        /*user.getAddresses().add(hAdrress);
+        user.getAddresses().add(bAddress);*/
+        addressManager.addAddress(user, hAddress);
+        addressManager.addAddress(user, bAddress);
     }
 
     public void removeAddress() {
@@ -66,6 +74,21 @@ public abstract class Account {
          * kullanıcının adreslerinden çıkartma
          * yapabileceği bir soyut olmayan fonksiyon tanımlanacaktır.
          */
+        Scanner sc = new Scanner(System.in);
+        System.out.println("1- Ev adresi Sil");
+        System.out.println("2- İş adresi Sil");
+        int option = sc.nextInt();
+        switch (option) {
+            case 1:
+                addressManager.removeAddress(user, user.getAddresses().get(0));
+                break;
+            case 2:
+                addressManager.removeAddress(user, user.getAddresses().get(1));
+                break;
+            default:
+                System.out.println("Geçersiz seçim!");
+        }
+
     }
 
     public boolean loggedIn() {
