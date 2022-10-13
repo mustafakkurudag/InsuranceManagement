@@ -37,11 +37,11 @@ public abstract class Account {
          */
 
         if (email.equals(user.getEmail()) && password.equals(user.getPassword())) {
-            authenticationStatus = AuthenticationStatus.SUCCESS;
+            this.authenticationStatus = AuthenticationStatus.SUCCESS;
         } else if (!(email.equals(user.getEmail())) || !(password.equals(user.getPassword()))) {
             throw new InvalidAuthenticationException("Giriş Hatası!");
         } else {
-            authenticationStatus = AuthenticationStatus.FAIL;
+            this.authenticationStatus = AuthenticationStatus.FAIL;
         }
     }
 
@@ -100,4 +100,20 @@ public abstract class Account {
     }
 
     abstract void addInsurance();
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public AuthenticationStatus getAuthenticationStatus() {
+        return authenticationStatus;
+    }
+
+    public void setAuthenticationStatus(AuthenticationStatus authenticationStatus) {
+        this.authenticationStatus = authenticationStatus;
+    }
 }

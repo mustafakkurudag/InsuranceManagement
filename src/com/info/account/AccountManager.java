@@ -1,5 +1,7 @@
 package com.info.account;
 
+import com.info.InvalidAuthenticationException;
+
 import java.util.Date;
 import java.util.TreeSet;
 
@@ -22,7 +24,19 @@ public class AccountManager {
         this.accounts = accounts;
     }
 
-    void login(){
+    public Account login(String email, String password) {
+        try {
+            for (Account a : accounts) {
+                a.login(email, password);
+                if (a.getAuthenticationStatus() == Account.AuthenticationStatus.SUCCESS) {
+                    return a;
+                } else {
+                    continue;
+                }
+            }
+        } catch (InvalidAuthenticationException e) {
+            e.printStackTrace();
+        }
         /**
          * bu sınıf içinde login isminde bir fonksiyon tanımlayınız.
          * Bu fonksiyon dışarıdan verilen email ve şifre bilgisini alıp Account listesi
@@ -32,5 +46,6 @@ public class AccountManager {
          * "InvalidAuthenticationException" tipinde hata fırlatabiliyordu.
          * Bu nedenle burada try-catch mekanizması kurmayı unutmayınız.
          */
+        return null;
     }
 }
