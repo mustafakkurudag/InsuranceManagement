@@ -12,7 +12,7 @@ public class AccountManager {
         accounts = new TreeSet<>();
         accounts.add(new Individual(new User("Mustafa Kemal", "Kurudağ", "mkk@mail.com", "12345",
                 "Java Developer", 27, new Date())));
-        accounts.add(new Enterprise(new User("Ayşe Tuğçe", "Özet", "ato@mail.com", "67890",
+        accounts.add(new Enterprise(new User("Ayşe Tuğçe", "Türkçe Öğretim Kurumu", "ato@mail.com", "67890",
                 "Türkçe Öğretmeni", 28, new Date())));
     }
 

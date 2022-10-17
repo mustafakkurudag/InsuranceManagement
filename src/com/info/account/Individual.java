@@ -2,7 +2,7 @@ package com.info.account;
 
 public class Individual extends Account{
     public Individual(User user) {
-        super(user);
+        super(user, "Bireysel");
     }
 
     /**
@@ -15,5 +15,10 @@ public class Individual extends Account{
     @Override
     void addInsurance() {
 
+    }
+
+    @Override
+    public int compareTo(Account o) {
+        return 0;
     }
 }

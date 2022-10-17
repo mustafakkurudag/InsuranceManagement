@@ -11,6 +11,7 @@ public class BusinessAddress implements Address {
         return address;
     }
 
+    @Override
     public void setAddress(String address) {
         this.address = address;
     }

@@ -2,7 +2,7 @@ package com.info.account;
 
 public class Enterprise extends Account{
     public Enterprise(User user) {
-        super(user);
+        super(user, "Kurumsal");
     }
 
     /**
@@ -16,5 +16,10 @@ public class Enterprise extends Account{
     @Override
     void addInsurance() {
 
+    }
+
+    @Override
+    public int compareTo(Account o) {
+        return 0;
     }
 }
