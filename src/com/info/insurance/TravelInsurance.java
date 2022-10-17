@@ -1,12 +1,19 @@
 package com.info.insurance;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class TravelInsurance extends Insurance {
     public TravelInsurance() {
         this.setInsuranceName("Seyahat Sigortası");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.YEAR, 3);
+        this.setEndDate(calendar.getTime());
     }
 
     @Override
-    double calculate(Insurance insurance) {
-        return insurance.getInsurancePrice()*20;
+    public double calculate() {
+        return getInsurancePrice()*20;
     }
 }

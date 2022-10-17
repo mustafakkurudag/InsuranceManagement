@@ -1,6 +1,11 @@
 package com.info.account;
 
+import com.info.insurance.Insurance;
+
+import java.util.ArrayList;
+
 public class Enterprise extends Account{
+    ArrayList<Insurance> myInsurances = new ArrayList<>();
     public Enterprise(User user) {
         super(user, "Kurumsal");
     }
@@ -14,8 +19,9 @@ public class Enterprise extends Account{
      */
 
     @Override
-    void addInsurance() {
-
+    public void addInsurance(Insurance i) {
+        myInsurances.add(i);
+        setInsurances(myInsurances);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.info.account;
 
 import com.info.address.Address;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -87,7 +88,7 @@ public class User {
     }
 
     public Date getLastLogin() {
-        return lastLogin;
+        return new Date();
     }
 
     public void setLastLogin(Date lastLogin) {

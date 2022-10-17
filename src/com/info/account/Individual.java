@@ -1,6 +1,11 @@
 package com.info.account;
 
+import com.info.insurance.Insurance;
+
+import java.util.ArrayList;
+
 public class Individual extends Account{
+    ArrayList<Insurance> myInsurances = new ArrayList<>();
     public Individual(User user) {
         super(user, "Bireysel");
     }
@@ -13,8 +18,9 @@ public class Individual extends Account{
      * marjı farklı olacaktır.
      */
     @Override
-    void addInsurance() {
-
+    public void addInsurance(Insurance i) {
+        myInsurances.add(i);
+        setInsurances(myInsurances);
     }
 
     @Override

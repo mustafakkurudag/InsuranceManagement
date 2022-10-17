@@ -5,7 +5,9 @@ import com.info.address.Address;
 import com.info.address.AddressManager;
 import com.info.address.BusinessAddress;
 import com.info.address.HomeAddress;
+import com.info.insurance.CarInsurance;
 import com.info.insurance.Insurance;
+import com.info.insurance.TravelInsurance;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -28,17 +30,6 @@ public abstract class Account implements Comparable<Account> {
     }
 
     public void login(String email, String password) throws InvalidAuthenticationException {
-        /**
-         * kullanıcının hesabına login olabilmesi için bir fonksiyon tanımlanacaktır.
-         * Bu fonksiyon email ve şifre bilgisi alacak ve gelen email şifre bilgisini
-         * User sınıfındaki email ve şifre ile kıyaslayacaktır. Eğer girilen bilgiler
-         * doğruysa giriş işlemi başarılı olacaktır. Ve kullanıcının login olma durumu
-         * SUCCESS'e çekilecektir. Giriş işlemi başarısız ise
-         * "InvalidAuthenticationException" tipinde bir hata fırlatacaktır.
-         * Bu hata sınıfını Exception isimli Java sınıfından kalıtım alarak sizin
-         * yazmanız gerekecektir.
-         */
-
         if (email.equals(user.getEmail()) && password.equals(user.getPassword())) {
             this.authenticationStatus = AuthenticationStatus.SUCCESS;
         } else if (!(email.equals(user.getEmail())) || !(password.equals(user.getPassword()))) {
@@ -49,28 +40,34 @@ public abstract class Account implements Comparable<Account> {
     }
 
     public final void showUserInfo(User user){
-        //TODO Account typeı (Bireysel, Kurumsal)na göre bilgileri farklı getir.
         System.out.println("Sigortalı bilgileri:");
+        System.out.println("Üyelik Tipi: " + getType());
         System.out.println("İsim: " + user.getName() + " " + user.getSurname());
         System.out.println("Yaş: " + user.getAge());
         System.out.println("Email: " + user.getEmail());
         System.out.println("Meslek: " + user.getProfession());
+        System.out.print("Sigortalar: ");
+        if (getInsurances() != null)
+            showInsurances(getInsurances());
+        else
+            System.out.println("-");
         if (user.getAddresses() == null) {
             System.out.println("Kayıtlı ev veya iş adresiniz yok!");
             System.out.println("Adres ekle? A / Çıkış Yap C");
-            String answer = scan.nextLine();
-            if (answer.toUpperCase().equals("A")) {
+            String answer = scan.nextLine().toUpperCase();
+            if (answer.equals("A")) {
                 addAddress(user);
                 showUserInfo(user);
-            } else if(answer.toUpperCase().equals("C")) {
-                System.out.println("Adres eklenmeyecek!");
+            } else if(answer.equals("C")) {
+                System.out.println("Çıkış yapılıyor...");
+                authenticationStatus = AuthenticationStatus.FAIL;
             }
         } else {
             System.out.println("Ev Adresi: " + user.getAddresses().get(0).getAddress());
             System.out.println("İş Adresi: " + user.getAddresses().get(1).getAddress());
             System.out.println("Adres silmek ister misiniz? E / H");
-            String answer = scan.nextLine();
-            if (answer.toUpperCase().equals("E")) {
+            String answer = scan.nextLine().toUpperCase();
+            if (answer.equals("E")) {
                 removeAddress();
                 showUserInfo(user);
             }
@@ -78,7 +75,13 @@ public abstract class Account implements Comparable<Account> {
 
     }
 
-    //bu ve alttaki removeAddress metotlarından kullanıcı adres ekleyip çıkarabilecek.
+    public void showInsurances(ArrayList<Insurance> insurances) {
+        for (Insurance s :
+                insurances) {
+            System.out.print(s.getInsuranceName() + ", ");
+        }
+    }
+
     public void addAddress(User user) {
         ArrayList<Address> userAddresses = new ArrayList<>();
         System.out.print("Ev adresi:(Boş bırakmak için enter'a basın) ");
@@ -92,10 +95,6 @@ public abstract class Account implements Comparable<Account> {
     }
 
     public void removeAddress() {
-        /**
-         * kullanıcının adreslerinden çıkartma
-         * yapabileceği bir soyut olmayan fonksiyon tanımlanacaktır.
-         */
         Scanner sc = new Scanner(System.in);
         System.out.println("1- Ev adresi Sil");
         System.out.println("2- İş adresi Sil");
@@ -113,38 +112,25 @@ public abstract class Account implements Comparable<Account> {
 
     }
 
-    public boolean loggedIn() {
-        /**
-         * kullanıcının login olma durumunu veren değer döndüren
-         * fonksiyon tanımlanacaktır.
-         */
-        return false;
+    public AuthenticationStatus loggedIn() {
+        return this.authenticationStatus;
     }
 
-    abstract void addInsurance();
+    public abstract void addInsurance(Insurance i);
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public ArrayList<Insurance> getInsurances() {
+        return insurances;
     }
 
-    public AuthenticationStatus getAuthenticationStatus() {
-        return authenticationStatus;
-    }
-
-    public void setAuthenticationStatus(AuthenticationStatus authenticationStatus) {
-        this.authenticationStatus = authenticationStatus;
+    public void setInsurances(ArrayList<Insurance> insurances) {
+        this.insurances = insurances;
     }
 
     public String getType() {
         return type;
     }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
 }
